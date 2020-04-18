@@ -1,0 +1,168 @@
+
+@font-face {
+	font-family: 'poller_oneregular';
+	src: url('../fonts/pollerone/pollerone-webfont.eot');
+	src: url('../fonts/pollerone/pollerone-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('../fonts/pollerone/pollerone-webfont.woff') format('woff'),
+		 url('../fonts/pollerone/pollerone-webfont.ttf') format('truetype'),
+		 url('../fonts/pollerone/pollerone-webfont.svg#poller_oneregular') format('svg');
+}
+@font-face {
+	font-family: 'leckerli_oneregular';
+	src: url('../fonts/leckerlione/leckerlione-regular-webfont.eot');
+	src: url('../fonts/leckerlione/leckerlione-regular-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('../fonts/leckerlione/leckerlione-regular-webfont.woff') format('woff'),
+		 url('../fonts/leckerlione/leckerlione-regular-webfont.ttf') format('truetype'),
+		 url('../fonts/leckerlione/leckerlione-regular-webfont.svg#leckerli_oneregular') format('svg');
+}
+
+body {
+	background: #fff;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 1;
+	margin: 0;
+	min-width: 960px;
+	padding: 0;
+}
+p {
+	color: #252525;
+	line-height: 24px;
+	margin: 0;
+	padding: 0;
+}
+p a {
+	color: #252525;
+	text-decoration: underline;
+}
+p a:hover {
+	color: #898989;
+}
+#header {
+	margin: 0 auto;
+	padding: 44px 0 50px;
+	text-align: center;
+	width: 960px;
+}
+
+#header h1 {
+	color: #fff;
+	display: inline;
+	font-family: poller_oneregular;
+	font-size: 35px;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+	text-transform: uppercase;
+}
+#header h1 span {
+	background: #252525;
+	display: inline-block;
+	padding: 15px 28px 12px;
+}
+#header a.logo {
+	display: block;
+	margin-left: auto;
+  	margin-right: auto;
+	padding: 0;
+	
+}
+#header a.text{
+	display: block;
+	margin-left: auto;
+  	margin-right: auto;
+	padding: 0;
+	
+}
+#header a.logo img {
+	border: 0;
+	display: block;
+	margin-left: auto;
+  	margin-right: auto;
+	padding: 0;
+	text-align: center;
+}
+
+#header ul {
+	margin: 0;
+	padding: 56px 0 0;
+}
+#header ul li {
+	display: inline;
+	list-style: none;
+	margin: 0;
+	padding: 0 19px;
+}
+#header ul li a {
+	color: #252525;
+	display: inline-block;
+	font-family: "Arial Black", Gadget, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	margin: 0;
+	padding: 0 0 3px;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+#header ul li a:hover, #header ul li.selected a {
+	color: #0ba39c;
+}
+#body {
+	margin: 0;
+	padding: 0 0 30px;
+	text-align: center;
+}
+#body h1 {
+	color: #fff;
+	display: inline;
+	font-family: poller_oneregular;
+	font-size: 35px;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+	text-transform: uppercase;
+}
+#body h1 span {
+	background: #252525;
+	display: inline-block;
+	padding: 15px 28px 12px;
+}
+
+#body form {
+	margin: 0 auto;
+	padding: 24px 0 0;
+	width: 620px;
+}
+#body form input, #body form textarea {
+	border: 2px solid #252525;
+	color: #252525;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	font-weight: normal;
+	margin: 0 0 37px;
+	padding: 20px 10px;
+	text-align: center;
+	text-transform: uppercase;
+	width: 596px;
+}
+#body form textarea {
+	height: 175px;
+	overflow: auto;
+	resize: none;
+}
+#body form #send {
+	background: #252525;
+	color: #fff;
+	font-family: "Arial Black", Gadget, sans-serif;
+	font-size: 15px;
+	font-weight: normal;
+	display: inline-block;
+	padding: 20px 28px;
+	width: auto;
+}
+#body form #send:hover {
+	background: #fff;
+	color: #252525;
+	cursor: pointer;
+}
