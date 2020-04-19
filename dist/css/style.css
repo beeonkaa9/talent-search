@@ -167,10 +167,16 @@ p a:hover {
 	cursor: pointer;
 }
 
-/*Log-in form*/
-.input[type=text] {
+/*Log-in form*/ 
+#login form {
+	margin: 0 auto;
+	padding: 24px 0 0;
+	width: 200px;
+}
+
+#login form input[type=text] {
 	width: 100%;
-	padding: 50px 50px;
+	padding: 15px 20px;
 	margin: 10px 0;
 	display: inline-block;
 	border: 1px solid black;
@@ -178,9 +184,9 @@ p a:hover {
 	box-sizing: border-box;	
 }
 
-.input[type=password] {
+#login form input[type=password] {
 	width: 100%;
-	padding: 50px 50px;
+	padding: 15px 20px;
 	margin: 10px 0;
 	display: inline-block;
 	border: 1px solid black;
@@ -188,9 +194,10 @@ p a:hover {
 	box-sizing: border-box;
 }
 
-.input[type=submit] {
+
+#login form input[type=submit] {
 	width: 100%;
-	padding: 50px 50px;
+	padding: 15px 20px;
 	margin: 10px 0;
 	background-color: lightblue;
 	color: black;
@@ -199,9 +206,10 @@ p a:hover {
 	cursor: pointer;
 }
 
-.input[type=submit]:hover {
+#login form input[type=submit]:hover {
 	background-color: lightskyblue;
 }
+
 
 /* map */
 .btn {
