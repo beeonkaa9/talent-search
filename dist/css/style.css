@@ -24,7 +24,7 @@ body {
 	line-height: 1;
 	margin: 0;
 	min-width: 960px;
-	padding: 0;
+	padding: 0 50px 0;
 }
 p {
 	color: #252525;
@@ -167,10 +167,31 @@ p a:hover {
 	cursor: pointer;
 }
 
+/*Column layout*/
+.column {
+	float: left;
+	padding: 25px 0;
+}
+
+/*left and right*/
+.column.left {
+	width: 25%;
+}
+
+/*Right side; main content*/
+.column.right {
+	width: 75%;
+}
+
+.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
 /*Log-in form*/ 
 #login form {
 	margin: 0 auto;
-	padding: 24px 0 0;
 	width: 200px;
 }
 
