@@ -1,0 +1,17 @@
+
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+<h1>Group of Users: </h1>
+<ul>
+    <% for(user of users) { %>
+        <li>
+            <%= user.name + " " + user.talent + " " + user.phone + " " + user.email %> 
+        </li>
+    <% } %>
+</ul>
+</body>
+</html>
