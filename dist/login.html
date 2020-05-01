@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Localy</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	
+</head>
+<body>
+	<div id="header">
+		<h1><a href="index.html" class="logo">
+			<img src="images/logocrop.png" alt="">ocaly</a> 
+		</h1>
+
+		<!--<h1><span>Localy</span></h1>-->
+		
+		<ul id="navigation">
+			<li class="selected">
+				<a href="index.html">home</a>
+			</li>
+			<li>
+				<a href="about.html">about</a>
+			</li>
+			<li>
+				<a href="contact.html">contact</a>
+			</li>
+		</ul>
+	</div>
+
+	<form action='/login' method='post'>
+		<div>
+			<label>Username:</label>
+			<input type='text' name='username'/>
+		</div>
+		<div>
+			<label>Password:</label>
+			<input type='password' name='password'/>
+		</div>
+		<div>
+			<input type='submit' value='log in'/>
+		</div>
+	</form>
+		
+		
+	<!--Map display-->
+	<div id="pattern" class="pattern">
+		<div class="map">
+		  <a href="https://maps.google.com/maps?q=Pittsburgh,+PA&hl=en&sll=40.697488,-73.979681&sspn=0.667391,1.447449&oq=Pittsburgh&hnear=Pittsburgh,+Allegheny,+Pennsylvania&t=m&z=12" class="btn map-link">View Map</a>
+		</div>
+	  </div>
+	  <!--End Pattern HTML-->
+	  
+	
+	  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script><script  src="./script.js"></script>
+	
+	
+</body>
+</html>
