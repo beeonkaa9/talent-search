@@ -11,12 +11,10 @@
 		<h1><a href="index.html" class="logo">
 			<img src="images/logocrop.png" alt="">ocaly</a> 
 		</h1>
-
-		<!--<h1><span>Localy</span></h1>-->
 		
 		<ul id="navigation">
 			<li class="selected">
-				<a href="index.html">home</a>
+				<a href="home.html">home</a>
 			</li>
 			<li>
 				<a href="about.html">about</a>
@@ -27,49 +25,32 @@
 		</ul>
 	</div>
 
-	<div class = "row">
-		<!--left column-->
-		<div class = "column right">
-			<!--Login form-->
-			<!--fix this to go to a different page-->
-			
-			<div id = login>
-				<h2>Login</h2>
-				<form action="index.html">
-					<label for="username">Username</label>
-					<input type = "text" id = "username" 
-					name = "username" placeholder = "Username or email">
-					<br>
-					<label for="password">Password</label>
-					<input type = "password" id = "password"
-					name = "password" placeholder= "Password">
-					<br>
-					<input type="submit" value="Login">
-				</form>
-			</div>
-		</div>
-
-		
-
-		<!--middle column (main one)
-		<div class = "column right">
-			<h1>Test</h1>
-			<p>Testing the middle</p>
-		</div>
-		-->
-		
-
-		<!--Right column
-		<div class = "column side">
-			<h2>Test</h2>
-			<p>Testing the right side</p>
-		</div>-->
-		
+	<div id = "body">
+		<h2>Login</h2>
+	</div>
+	
+	<div id = login>
+		<form action='/login' method='post'>
+			<label for="username">Username</label>
+			<input type = "text"
+			name = "username" placeholder = "Username or email">
+			<br>
+			<label for="password">Password</label>
+			<input type = "password"
+			name = "password" placeholder= "Password">
+			<br>
+			<input type="submit" value="Log in">
+		</form>
 		
 	</div>
 	
-	<a href="login.html">Login test</a>
+	<div id = "body">
+		<p><a href="home.html">Create an account</a></p>
+	</div>
 	
+
+		
+	<br><br><br>	
 	<!--Map display-->
 	<div id="pattern" class="pattern">
 		<div class="map">

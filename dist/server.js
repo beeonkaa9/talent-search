@@ -4,28 +4,38 @@ var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io').listen(http);
 var path = require('path');
+var userModel = require("./models/user");
 
-/*For authentication*/
-var passport = require('passport'), 
-    LocalStrategy = require ('passport-local').Strategy;
+/*Will help with navigation of logged in/public users */
+const publicRouter = require("./routes/public");
+const homeRouter = require("./routes/home");
+const logoutRouter = require("./routes/logout");
+
+
 
 const mongoose = require('mongoose');
 var session = require('express-session'),
     bodyParser = require('body-parser');
 
+mongoose.connect('mongodb+srv://admin:2020CoSci479@cluster0-jllfr.mongodb.net/test?retryWrites=true&w=majority', {
+    useUnifiedTopology: true,
+    useNewUrlParser: true}).catch(error => console.log("Something went wrong: " + error));
 
-//mongoose.connect('mongodb://localhost:27017/website', {useNewUrlParser: true}).catch(error => console.log("Something went wrong: " + error));
 
-//var userModel = require("./userdb/models/user");
-
-/*Configuration for Passport (Express 4.x no longer has app.configure() method) */
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname + "/pages"));
+
+/*Configuration for Passport (Express 4.x no longer has app.configure() method) */
 app.use(session({
     secret: 'cats',
     resave: true,
     saveUninitialized: true
 }));
+
+/*For authentication*/
+var passport = require('passport'), 
+    LocalStrategy = require ('passport-local').Strategy;
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -34,10 +44,20 @@ app.use(express.json());
 app.use(express.static('dist'));
 app.use(express.static(__dirname + "/pages"));
 
-app.use('/')
-app.get('/login', function(req, res){
-    res.sendFile(__dirname + '/login.html');
-});
+app.use('/', publicRouter);
+app.use('/home', loginNeeded, homeRouter);
+app.use('/logout', logoutRouter);
+
+
+/*Only allows page to render if user is logged in
+https://scotch.io/tutorials/build-and-understand-a-simple-nodejs-website-with-user-authentication */
+function loginNeeded(req, res, next) {
+    if (!req.user) {
+        return res.status(401).render("nouser");
+    }
+    next();
+}
+
 
 /*Creation of new user 
 app.post('/user', function(req, res){
@@ -93,12 +113,6 @@ app.post('/login',
         successRedirect:'/',
         failureRedirect: '/login.html'
 }));
-
-/*Log out user */
-app.get('logout', function(req, res){
-    req.logout();
-    res.redirect('/');
-});
 
 http.listen(3000, function(){
     console.log('listening on *:3000');

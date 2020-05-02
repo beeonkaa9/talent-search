@@ -138,6 +138,10 @@ p a:hover {
 	padding: 15px 28px 12px;
 }
 
+#body a {
+	text-decoration: none;
+}
+
 #body form {
 	margin: 0 auto;
 	padding: 24px 0 0;
