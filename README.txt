@@ -23,3 +23,5 @@ For MongoDB/authentication:
 8)npm install passport-local --save
 
 9)npm install passport-openid --save
+
+10)npm install passport-local-mongoose --save
