@@ -25,3 +25,7 @@ For MongoDB/authentication:
 9)npm install passport-openid --save
 
 10)npm install passport-local-mongoose --save
+
+11)npm install bcrypt --save
+
+12)npm install mongoose-unique-validator --save

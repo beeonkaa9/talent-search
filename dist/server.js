@@ -6,7 +6,6 @@ var io = require('socket.io').listen(http);
 var path = require('path');
 var userModel = require("./models/user");
 var bodyParser = require ('body-parser');
-var cookieParser = require ('cookie-parser');
 
 /*Will help with navigation of logged in/public users */
 const publicRouter = require("./routes/public");
@@ -71,18 +70,24 @@ and message of what failed
 Otherwise, callback sends back user that authenticated
 If there is an error while verifying credentials, error is sent*/
 const LocalStrategy = require("passport-local").Strategy;
-const local = new LocalStrategy(function(username, password, done) {
-        userModel.findOne({username: username}, function (err, user) {
-            if (err) {return done(err);}
-            if (!user) {
-                return done(null, false, {message: 'Incorrect username'});
-            }
-            if (!user.validPassword(password)) {
+
+const local = (new LocalStrategy (function(username, password, done) {
+    userModel.findOne({username: username}, function(err, user){
+        if(err) return done(err);
+        if(!user) {
+            return done (null, false, {message: 'Incorrect username'});
+        }
+        userModel.validPassword(password, user.password, function(err, isMatch){
+            if(err) return done(err);
+            if(isMatch){
+                return done(null, user);
+            } else {
                 return done(null, false, {message: 'Incorrect password'});
             }
-            return done(null, user);
         });
-});
+    });
+    }
+));
 
 passport.use('local', local);
 
@@ -94,18 +99,10 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done){
-    User.findById(id, function(err, user) {
+    userModel.findById(id, function(err, user) {
         done(err, user);
     });
 });
-
-/*If user successfully logs in, redirect to home
-Otherwise, redirect to login */
-app.post('/login',
-    passport.authenticate('local', {
-        successRedirect:'/',
-        failureRedirect: '/login.html'
-}));
 
 /*Creation of new user 
 https://medium.com/gomycode/authentication-with-passport-js-73ca65b25feb*/
@@ -114,29 +111,46 @@ app.post('/registration', function(req, res){
     var pass2 = req.body.password2;
 
     if (pass == pass2) {
-        var newUser = new User ({
+        var newUser = new userModel ({
             name: req.body.name,
             email: req.body.email,
             talent: req.body.talent,
             phone: req.body.phone,
+            city: req.body.city,
             username: req.body.username,
             password: req.body.password
         });
 
-        User.createUser(newUser, function(err, user){
-            if (err) {return done(err)};
-            res.send(user.end());
-        })
+        userModel.createUser(newUser, function(err, user){
+            if (err) throw err;
+            res.send(user).end();
+        });
     }
     else {
-        res.status(500).send("{errors: \"Passwords don't match. Try again\"}").end();
+        res.status(500).send("{error: \"Passwords don't match. Try again\"}").end();
+        res.redirect('/registration');
     }
 }); 
 
+/*If user successfully logs in, redirect to home
+Otherwise, redirect to login */
+app.post('/login',
+    passport.authenticate('local', {
+        successRedirect: "/",
+        failureRedirect: "/contact.html" //CHANGE THIS!!!!
+    })
+);
+
+/*Logout route */
 app.all("/logout", function(req, res) {
     req.logout();
     res.redirect("/");
 });
+
+
+app.get('/user', function(req, res) {
+    res.send(req.user);
+}); 
 
 app.get("/", function(req, res){
     res.render("index", {user:req.user});
