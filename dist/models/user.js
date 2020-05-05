@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema({
     password: String
 });
 
+userSchema.statics.listAllUsers = function(name, name2) {
+    return this.find({talent : name , city:name2});
+};
+
 userSchema.plugin(uniqueValidation, {message: 'is already taken'});
 
 const userModel = mongoose.model('userModel', userSchema);

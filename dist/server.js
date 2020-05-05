@@ -62,6 +62,19 @@ function loginNeeded(req, res, next) {
     next();
 }
 
+app.get("/form", function(req, res){
+    res.render("form");
+});
+app.post("/group", function(req,res) {
+    const talentform = req.body.talentf
+    const cityform = req.body.cityf
+    userModel.listAllUsers(talentform,cityform).then(function(users){
+        res.render("group", {users:users});
+    }).catch(function(error){ 
+        res.error("Something went wrong!" + error );
+    });
+    
+})
 /*Authentication - http://www.passportjs.org/docs/*/
 
 /*Strategy: LocalStrategy for username/password authentication 
@@ -131,6 +144,19 @@ app.post('/registration', function(req, res){
         res.redirect('/registration');
     }
 }); 
+
+
+app.get("/group", function(req,res) {
+    userModel.listAllUsers().then(function(users){
+        res.render("group", {users:users});
+    }).catch(function(error){ 
+        res.error("Something went wrong!" + error );
+    });
+    
+})
+
+
+
 
 /*If user successfully logs in, redirect to home
 Otherwise, redirect to login */
