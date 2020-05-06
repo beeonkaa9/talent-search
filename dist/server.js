@@ -140,12 +140,13 @@ app.post('/registration', function(req, res){
         });
     }
     else {
-        res.status(500).send("{error: \"Passwords don't match. Try again\"}").end();
-        res.redirect('/registration');
+        res.status(500).send("{error: \"Passwords don't match. Try again\"}");
+        //res.redirect('/registration');
+        return;
     }
 }); 
 
-
+/*Returns the users that are searched for in form.ejs */
 app.get("/group", function(req,res) {
     userModel.listAllUsers().then(function(users){
         res.render("group", {users:users});

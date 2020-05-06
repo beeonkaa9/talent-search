@@ -194,12 +194,12 @@ img.inline {
 
 /*left and right*/
 .column.left {
-	width: 25%;
+	width: 75%;
 }
 
 /*Right side; main content*/
 .column.right {
-	width: 75%;
+	width: 25%;
 }
 
 .row:after {
@@ -211,13 +211,13 @@ img.inline {
 /*Log-in form*/ 
 #login form {
 	margin: 0 auto;
-	width: 200px;
+	width: 170px;
 }
 
 #login form input[type=text] {
 	width: 100%;
-	padding: 15px 20px;
-	margin: 10px 0;
+	padding: 5px 10px;
+	margin: 5px 0;
 	display: inline-block;
 	border: 1px solid black;
 	border-radius: 4px;
@@ -226,8 +226,8 @@ img.inline {
 
 #login form input[type=password] {
 	width: 100%;
-	padding: 15px 20px;
-	margin: 10px 0;
+	padding: 5px 10px;
+	margin: 5px 0;
 	display: inline-block;
 	border: 1px solid black;
 	border-radius: 4px;
@@ -237,8 +237,8 @@ img.inline {
 
 #login form input[type=submit] {
 	width: 100%;
-	padding: 15px 20px;
-	margin: 10px 0;
+	padding: 5px 10px;
+	margin: 5px 0;
 	background-color: lightblue;
 	color: black;
 	border: none;
