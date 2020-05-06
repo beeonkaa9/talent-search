@@ -8,13 +8,13 @@
 </head>
 <body>
 	<div id="header">
-		<h1><a href="index.html" class="logo">
+		<h1><a href="/home" class="logo">
 			<img src="images/logocrop.png" alt="">ocaly</a> 
 		</h1>
 		
 		<ul id="navigation">
 			<li class="selected">
-				<a href="home.html">home</a>
+				<a href="/home">home</a>
 			</li>
 			<li>
 				<a href="about.html">about</a>
@@ -27,26 +27,40 @@
 
 	<div class = "row">
 		<!--left column-->
-		<div class = "column left">
-			<!--Login form-->
-			<!--fix this to go to a different page-->
-			
-			<h1>Test</h1>
-			<p>Testing the left</p>
+		<div class = "column side">
+			<h2>Welcome, <%=user.name %>!</h2>
+
+			<img src="https://4deq6g2zdcrsz7fw01vk1rty-wpengine.netdna-ssl.com/wp-content/uploads/2016/07/artist-300x200.jpg">
+					<p><h3>Skylar | Artist</h3>
 		</div>
 
-		<!--middle column (main one)-->
-		<div class = "column right">
-			<h1>Test Form:</h1>
-        <form method="post" action="/group">
-  
-            Talent: <input type="text" name="talentf"><br>
-            City: <input type="text" name="cityf"><br>
-            <input type="submit" value="Submit">
-        </form>   
+		<div class = "column middle">
+			<br><br><h3>Your feed</h3>
+
+			<!--********WILL MOST LIKELY CHANGE*******-->
+			<form action = "/photos/upload">
+				<input type="file" id="userFile" name = "filename">
+				<input type = "submit">
+			</form>
+		</div>
+
+		<!--right column-->
+		<div class = "column side">
+			<div id = body>
+				<h1><a href = "./logout">Logout</a></h1>
+			</div>
 		</div>
 	</div>
 
+	<div id="body">
+		<h3>Connect with other local talent</h3>
+		<form method="post" action="/group">
+			<h3>Talent you are searching for:</h3> <input type="text" name="talentf"><br>
+			<h3>Which city?</h3> <input type="text" name="cityf"><br>
+			<input type="submit" value="Submit">
+		</form>    
+	</div>
+	
 	<!--Map display-->
 	<div id="pattern" class="pattern">
 		<div class="map">

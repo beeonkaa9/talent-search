@@ -138,8 +138,26 @@ p a:hover {
 	padding: 15px 28px 12px;
 }
 
+#body h2 {
+	color: black;
+	display: inline;
+	font-family: poller_oneregular;
+	font-size: 35px;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+	text-transform: uppercase;
+}
+
 #body a {
 	text-decoration: none;
+}
+
+#body h1 a {
+	color: black;
+	font-family: poller_oneregular;
+	text-decoration: none;
+	font-size: 30px;
 }
 
 #body form {
@@ -186,18 +204,18 @@ img.inline {
 	margin: 0 0;
 }
 
-/*Column layout*/
+/*Two column layout*/
 .column {
 	float: left;
 	padding: 25px 0;
 }
 
-/*left and right*/
+/*left - bigger column*/
 .column.left {
 	width: 75%;
 }
 
-/*Right side; main content*/
+/*Right side*/
 .column.right {
 	width: 25%;
 }
@@ -206,6 +224,15 @@ img.inline {
 	content: "";
 	display: table;
 	clear: both;
+}
+
+/*three column*/
+.column.side {
+	width: 25%;
+}
+
+.column.middle {
+	width: 50%;
 }
 
 /*Log-in form*/ 

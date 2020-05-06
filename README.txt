@@ -1,14 +1,14 @@
 Installation for NodeJS:
 
+npm install
+
+Packages used
+
 1)npm install express --save
 
 2)npm install express express-session session --save
 
 3)npm install express express-session session-file-store --save
-
-OR
-
-(npm install express express-session --save instead of 2 and 3)
 
 For chat feature
 4)npm install socket.io --save
@@ -29,3 +29,6 @@ For MongoDB/authentication:
 11)npm install bcrypt --save
 
 12)npm install mongoose-unique-validator --save
+
+For uploading files
+13)npm install --save multer

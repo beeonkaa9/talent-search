@@ -154,17 +154,14 @@ app.get("/group", function(req,res) {
         res.error("Something went wrong!" + error );
     });
     
-})
-
-
-
+});
 
 /*If user successfully logs in, redirect to home
 Otherwise, redirect to login */
 app.post('/login',
     passport.authenticate('local', {
-        successRedirect: "/",
-        failureRedirect: "/contact.html" //CHANGE THIS!!!!
+        successRedirect: "/home",
+        failureRedirect: "/login.html"
     })
 );
 
@@ -181,6 +178,10 @@ app.get('/user', function(req, res) {
 
 app.get("/", function(req, res){
     res.render("index", {user:req.user});
+});
+
+app.get("/home", function(req,res){
+    res.render("home", {user:req.user});
 });
 
 http.listen(3000, function(){
