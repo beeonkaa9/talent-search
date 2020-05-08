@@ -2,7 +2,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
-<body>
+<!-- <body>
 <h1>Group of Users: </h1>
 <ul>
     <% for(user of users) { %>
@@ -11,5 +11,36 @@
         </li>
     <% } %>
 </ul>
-</body>
+</body> -->
+<body>
+	<div id="header">
+		<h1><a href="/home" class="logo">
+			<img src="images/logocrop.png" alt="">ocaly</a> 
+        </h1>
+	</div>             
+<body class="container-fluid">
+    <div class="profile-bg container">
+        <% for(user of users) { %>
+      <div class="content">
+        
+        <p><h3><%= user.name + " " + user.talent + " " + user.city %></h3>
+        Im a college student majorinng in Art, and I do side jobs in Graphic Design, canvas paintings and Sculptures</p>
+      <small>www.skylarartstudio.com</small>
+      <small>(915) 702-1821</small>
+      </div>
+      <div class="social-bg">
+        <a href="https://twitter.com/lacasadepapel" target="_blank"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a>
+        
+        <a href="https://www.instagram.com/brfootball/" target="_blank"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>
+        
+        <a href="https://www.pinterest.com/chrisem/" target="_blank"><i class="fa fa-pinterest-p fa-2x" aria-hidden="true"></i></a>
+        
+      </div>
+      <% } %>
+    </div>
+  
+  
+  </body>
+
+  <script src='https://use.fontawesome.com/83fc84333f.js'></script><script  src="./script.js"></script>
 </html>
