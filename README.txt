@@ -32,3 +32,6 @@ For MongoDB/authentication:
 
 For uploading files
 13)npm install --save multer
+
+Flash messages
+14)npm install connect-flash --save

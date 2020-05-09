@@ -6,6 +6,8 @@ var io = require('socket.io').listen(http);
 var path = require('path');
 var userModel = require("./models/user");
 var bodyParser = require ('body-parser');
+var flash = require('connect-flash');
+var cookieParser = require('cookie-parser');
 
 /*Connecting to MongoDB Atlas */
 const mongoose = require('mongoose');
@@ -24,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 var session = require('express-session');
 var FileStore = require('session-file-store')(session);
 
+app.use(cookieParser());
 /*Configuration for Passport (Express 4.x no longer has app.configure() method) */
 app.use(session({
     name: 'session-id',
@@ -33,7 +36,6 @@ app.use(session({
     store: new FileStore()
 }));
 
-/*For authentication*/
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -42,19 +44,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json());
 
-app.get("/form", function(req, res){
-    res.render("form");
+/*For flash messages*/
+app.use(flash());
+app.use(function(req, res, next) {
+    res.locals.messages = req.flash();
+    next();
 });
-app.post("/group", function(req,res) {
-    const talentform = req.body.talentf
-    const cityform = req.body.cityf
-    userModel.listAllUsers(talentform,cityform).then(function(users){
-        res.render("group", {users:users});
-    }).catch(function(error){ 
-        res.error("Something went wrong!" + error );
-    });
-    
-})
+
+
 /*Authentication - http://www.passportjs.org/docs/*/
 
 /*Strategy: LocalStrategy for username/password authentication 
@@ -113,19 +110,44 @@ app.post('/registration', function(req, res){
             username: req.body.username,
             password: req.body.password
         });
-
-        userModel.createUser(newUser, function(err, user){
-            if (err) throw err;
-            res.send(user);
-            return;
+        
+        userModel.createUser(newUser, function(err, user) {
+            if (err) {
+                throw err;
+            } else {
+                req.login(user, function(err) {
+                    if (err) {
+                        throw err;
+                    }
+                    return res.redirect('/home');
+                });
+            }
         });
     }
+
     else {
-        res.status(500).send("{error: \"Passwords don't match. Try again\"}");
-        //res.redirect('/registration');
-        return;
+        /*
+        req.flash("messages", {"error" : "Passwords don't match"});
+        res.locals.messages = req.flash();
+        res.render("registration");
+         */
+        
     }
 }); 
+
+app.get("/form", function(req, res){
+    res.render("form");
+});
+app.post("/group", function(req,res) {
+    const talentform = req.body.talentf
+    const cityform = req.body.cityf
+    userModel.listAllUsers(talentform,cityform).then(function(users){
+        res.render("group", {users:users});
+    }).catch(function(error){ 
+        res.error("Something went wrong!" + error );
+    });
+    
+});
 
 /*Returns the users that are searched for in form.ejs */
 app.get("/group", function(req,res) {
@@ -146,17 +168,38 @@ app.post('/login',
     })
 );
 
-/*Logout route */
+/*Logout route (old)
 app.all("/logout", function(req, res) {
     req.logout();
     res.redirect("/");
 });
+*/
 
+app.get("/logout", function (req, res, next) {
+    if (req.session) {
+        req.session.destroy(function(err) {
+            if (err) {
+                return next(err);
+            } else {
+                req.logout();
+                return res.redirect('/');
+            }
+        });
+    }
+});
+
+
+app.get('/signup', function(req, res) {
+    req.flash('test' , 'testing flash');
+    res.render('registration');
+});
 
 app.get('/user', function(req, res) {
     res.send(req.user);
 }); 
 
+/*If user is logged in, render home. 
+Otherwise, render index page */
 app.get("/", function(req, res){
     if (req.user) {
         res.render("home", {user:req.user});
