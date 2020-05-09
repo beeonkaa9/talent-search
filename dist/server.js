@@ -7,11 +7,6 @@ var path = require('path');
 var userModel = require("./models/user");
 var bodyParser = require ('body-parser');
 
-/*Will help with navigation of logged in/public users */
-const publicRouter = require("./routes/public");
-const homeRouter = require("./routes/home");
-const logoutRouter = require("./routes/logout");
-
 /*Connecting to MongoDB Atlas */
 const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://admin:2020CoSci479@cluster0-jllfr.mongodb.net/test?retryWrites=true&w=majority', {
@@ -46,21 +41,6 @@ var passport = require('passport');
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json());
-
-/*
-app.use('/', publicRouter);
-app.use('/home', loginNeeded, homeRouter);
-app.use('/logout', logoutRouter);
-*/
-
-/*Only allows page to render if user is logged in
-https://scotch.io/tutorials/build-and-understand-a-simple-nodejs-website-with-user-authentication */
-function loginNeeded(req, res, next) {
-    if (!req.user) {
-        return res.status(401).render("nouser");
-    }
-    next();
-}
 
 app.get("/form", function(req, res){
     res.render("form");
@@ -136,7 +116,8 @@ app.post('/registration', function(req, res){
 
         userModel.createUser(newUser, function(err, user){
             if (err) throw err;
-            res.send(user).end();
+            res.send(user);
+            return;
         });
     }
     else {
@@ -160,7 +141,7 @@ app.get("/group", function(req,res) {
 Otherwise, redirect to login */
 app.post('/login',
     passport.authenticate('local', {
-        successRedirect: "/home",
+        successRedirect: "/",
         failureRedirect: "/login.html"
     })
 );
@@ -177,8 +158,12 @@ app.get('/user', function(req, res) {
 }); 
 
 app.get("/", function(req, res){
-    res.render("index", {user:req.user});
-});
+    if (req.user) {
+        res.render("home", {user:req.user});
+    } else {
+        res.render('index');
+    }  
+}); 
 
 app.get("/home", function(req,res){
     res.render("home", {user:req.user});
