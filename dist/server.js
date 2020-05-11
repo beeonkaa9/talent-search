@@ -1,4 +1,5 @@
 
+require('dotenv').config();
 var express = require('express');
 var app = require('express')();
 var http = require('http').createServer(app);
@@ -8,6 +9,13 @@ var userModel = require("./models/user");
 var bodyParser = require ('body-parser');
 var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
+
+/*cloudinary */
+var multer = require('multer');
+var cloudinary = require('cloudinary');
+var cloudinaryStorage = require('multer-storage-cloudinary');
+
+cloudinary.cloudinary_js_config();
 
 /*Connecting to MongoDB Atlas */
 const mongoose = require('mongoose');
@@ -25,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 /*For sessions*/
 var session = require('express-session');
 var FileStore = require('session-file-store')(session);
+var fsOption = {retries: 0};
 
 app.use(cookieParser());
 /*Configuration for Passport (Express 4.x no longer has app.configure() method) */
@@ -33,11 +42,11 @@ app.use(session({
     secret: 'cats',
     resave: true,
     saveUninitialized: true,
-    store: new FileStore()
+    store: new FileStore(fsOption)
 }));
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 
 var passport = require('passport');
 app.use(passport.initialize());
@@ -94,6 +103,24 @@ passport.deserializeUser(function(id, done){
     });
 });
 
+/*Cloudinary storage and configuration */
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET
+});
+
+const storage = cloudinaryStorage({
+    cloudinary: cloudinary,
+    folder: "images",
+    allowedFormats: ["jpg", "png"],
+    transformation: [{width: 300, height: 300, crop: "limit"}]
+});
+
+const parser = multer({storage:storage});
+
+/*ROUTES*/
+
 /*Creation of new user 
 https://medium.com/gomycode/authentication-with-passport-js-73ca65b25feb*/
 app.post('/registration', function(req, res){
@@ -126,6 +153,7 @@ app.post('/registration', function(req, res){
     }
 
     else {
+        res.status(500).send("{error: \"Passwords don't match\"}");
         /*
         req.flash("messages", {"error" : "Passwords don't match"});
         res.locals.messages = req.flash();
@@ -134,6 +162,20 @@ app.post('/registration', function(req, res){
         
     }
 }); 
+
+/*Uploads file and returns an object with file information (for displaying image)
+URL - allows you to display the image on homepage
+public_id - identifies image for access and deletion from Cloudinary
+https://www.freecodecamp.org/news/how-to-allow-users-to-upload-images-with-node-express-mongoose-and-cloudinary-84cefbdff1d9/ */
+app.post("/api/images", parser.single("image"), function(req,res){
+    console.log(req.file);
+    const picture = {};
+    picture.url = req.file.url;
+    picture.id = req.file.public_id;
+    Pictures.create(picture)
+        .then(newPictures => res.json(newPictures))
+        .catch(err => console.log(err));
+})
 
 app.get("/form", function(req, res){
     res.render("form");
@@ -181,7 +223,6 @@ app.get("/logout", function (req, res, next) {
             if (err) {
                 return next(err);
             } else {
-                req.logout();
                 return res.redirect('/');
             }
         });
